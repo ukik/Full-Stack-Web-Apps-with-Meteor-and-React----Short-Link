@@ -1,0 +1,2 @@
+jika ingin menggunakan pub/sub, matikan autopublish
+baca: https://atmospherejs.com/meteor/autopublish

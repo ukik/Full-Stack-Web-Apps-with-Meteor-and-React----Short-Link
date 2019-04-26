@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
   Accounts.validateNewUser((user) => {
     const email = user.emails[0].address
 
-    try {
+    // try { // menggunakan global Error di imports/startup/simple-schema-configuration.js
       new SimpleSchema({
         email: {
           type: String,
@@ -14,9 +14,9 @@ import { Accounts } from 'meteor/accounts-base';
       }).validate({
         email: email
       })
-    } catch (error) {
-      throw new Meteor.Error(400, error.message)
-    }  
+    // } catch (error) {
+    //   throw new Meteor.Error(400, error.message)
+    // }  
 
     return true
   })
