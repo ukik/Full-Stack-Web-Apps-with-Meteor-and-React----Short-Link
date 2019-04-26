@@ -1,6 +1,5 @@
 import { Mongo } from 'meteor/mongo'
 import { Meteor } from 'meteor/meteor';
-import Links from '../ui/Links';
 import Shortid from 'shortid'
 
 export const Links = new Mongo.Collection('links')
