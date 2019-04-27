@@ -3,18 +3,27 @@ import { WebApp } from 'meteor/webapp'
 
 import { Links } from '../imports/api/links'
 
+import moment from 'moment'
+
 import '../imports/api/users'
 import '../imports/api/links'
 import '../imports/startup/simple-schema-configuration'
 
 Meteor.startup(() => {
+  let now = new Date().getTime()
+  console.log(now);
+  
+  // Jan 16th, 2017
+  // 1:02pm
+  let momentNow = moment(0)
+  console.log(momentNow.fromNow());
+
   // REDIRECTING
   WebApp.connectHandlers.use((req, res, next) => {
     const _id = req.url.slice(1)
     const link = Links.findOne({ _id })
 
     console.log("_id:"+_id, "link:"+link);
-    
 
     if (link) {
       // Creating and registering new middleware function
@@ -26,6 +35,9 @@ Meteor.startup(() => {
       // res.setHeader('Location', 'http://www.google.com')
       res.setHeader('Location', link.url)
       res.end()
+
+      Meteor.call('links.trackVisit', _id)
+
     } else {
       next()
     }

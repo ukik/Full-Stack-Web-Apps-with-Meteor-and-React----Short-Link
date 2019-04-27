@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { Tracker } from 'meteor/tracker';
 import { Links } from '../api/links';
 import { Meteor } from 'meteor/meteor';
+
+import LinksListItem from '../ui/LinksListItem'
+
+import { Session } from 'meteor/session'
 
 export default class LinksList extends Component {
     constructor(props) {
@@ -20,7 +24,9 @@ export default class LinksList extends Component {
             // links adalah nama dari publish di imports/api/links.js
             Meteor.subscribe('links')
 
-            const links = Links.find().fetch()
+            const links = Links.find({
+                visible: Session.get('showVisible')
+            }).fetch()
             console.log('New Links', links);
 
             // dengan menambahkan Meteor.subscribe('links') di atas, akan membuat data yang dimasukkan ke const links adalah hasil dari imports/api/links.js
@@ -40,8 +46,11 @@ export default class LinksList extends Component {
     }
     renderLinksListItems() {
         return this.state.links.map((link) => {
-            console.log(link);
-            return <p key={link._id}>{link.url}</p> // ._id didapat dari mongo (_id auto generate)
+            const shortUrl = Meteor.absoluteUrl(link._id)
+            console.log('link', link);
+            console.log('shortUrl', shortUrl);
+            return <LinksListItem key={link._id} shortUrl={shortUrl} {...link} />
+            // return <p key={link._id}>{link.url}</p> // ._id didapat dari mongo (_id auto generate)
         }) 
     }
     render() {

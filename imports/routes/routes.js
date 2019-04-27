@@ -33,6 +33,7 @@ function callback(params) {
 }
 
 export const onAuthChange = (isAuthenticated) => {
+// export const onAuthChange = (isAuthenticated) => {
 
     const pathname = browserHistory.getCurrentLocation().pathname
     const isUnauthenticatedPage = unauthenticatedPages.includes(pathname)
